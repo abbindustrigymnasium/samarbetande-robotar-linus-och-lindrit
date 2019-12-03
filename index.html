@@ -32,8 +32,8 @@
         }
 
         let topic ="linus.kasper@abbindustrigymnasium.se/logger";
-        var value_linus = {"isValue": 0, "wantValue": 0, "error": 0, "pwm": 0}
-        var value_lindrit = {"isValue": 0, "wantValue": 0, "error": 0, "pwm": 0}
+        var value_linus = {"isValue": 0, "wantValue": 0, "error": 0, "pwm": 0, "time":0}
+        var value_lindrit = {"isValue": 0, "wantValue": 0, "error": 0, "pwm": 0, "time":0}
 
         
         function startConnect() {
@@ -53,26 +53,26 @@
             new Chart(document.getElementById("linusData"),  {
                 type: 'line',
   data: {
-    labels: ["0","5", "10", "15","20", "25", "30","35", "40", "45","50", "55", "60"],
+    labels: [value_linus.time],
     datasets: [{ 
         data: [value_linus.wantValue],
         label: "Linus Börvärde",
-        borderColor: "#3e95cd",
-        fill: false
-      }, { 
-        data: [value_lindrit.wantValue],
-        label: "Lindrit Börvärde",
-        borderColor: "#8e5ea2",
+        borderColor: "green",
         fill: false
       }, { 
         data: [value_linus.isValue],
         label: "Linus Ärvärde",
-        borderColor: "#3cba9f",
+        borderColor: "red",
         fill: false
       }, { 
-        data: [value_lindrit.isValue],
-        label: "Lindrits Ärvärde",
-        borderColor: "#e8c3b9",
+        data: [value_linus.pwm],
+        label: "Linus PWM",
+        borderColor: "blue",
+        fill: false
+      }, { 
+        data: [value_linus.error],
+        label: "Linus Reglerfel",
+        borderColor: "yellow",
         fill: false
       }
     ]
@@ -80,7 +80,7 @@
   options: {
     title: {
       display: true,
-      text: 'Bilarnas bör- och ärvärden'
+      text: 'Linus bil värden'
     }
   }
 });
@@ -88,26 +88,26 @@
             new Chart(document.getElementById("lindritsData"), {
                 type: 'line',
   data: {
-    labels: ["0","5", "10", "15","20", "25", "30","35", "40", "45","50", "55", "60"],
+    labels: [value_linus.time],
     datasets: [{ 
-        data: [value_linus.pwm],
-        label: "Linus PWM",
-        borderColor: "#3e95cd",
+        data: [value_lindrit.wantValue],
+        label: "Lindrit Börvärde",
+        borderColor: "green",
+        fill: false
+      }, { 
+        data: [value_lindrit.isValue],
+        label: "Lindrits Ärvärde",
+        borderColor: "red",
         fill: false
       }, { 
         data: [value_lindrit.pwm],
         label: "Lindrit PWM",
-        borderColor: "#8e5ea2",
-        fill: false
-      }, { 
-        data: [value_linus.error],
-        label: "Linus Reglerfel",
-        borderColor: "#3cba9f",
+        borderColor: "blue",
         fill: false
       }, { 
         data: [value_lindrit.error],
         label: "Lindrits Reglerfel",
-        borderColor: "#e8c3b9",
+        borderColor: "yellow",
         fill: false
       }
     ]
@@ -115,7 +115,7 @@
   options: {
     title: {
       display: true,
-      text: 'Bilarnas PWM och reglerfel'
+      text: 'Lindrits bil värden'
     }
   }
 });
