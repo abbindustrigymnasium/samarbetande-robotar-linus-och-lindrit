@@ -3,8 +3,8 @@
 #define dir 0
 #define hallGivarePin 13
 
-int rev = 0, velocity = 0;
-bool countRotation = false;
+float rev = 0, currentMillis = 0, startMillis = 0, diffMillis = 0, currentPulse = 0, startPulse = 0, diffPulse = 0, circumference = 11.6;
+float error = 0, k = 0.5, isValue = 0, shouldValue = 50, enginePower = 800;
 
 void onConnectionEstablished();
 
@@ -22,45 +22,55 @@ EspMQTTClient client(
 );
 
 void setup() {
-  Serial.begin(115200);
-  pinMode(hallGivarePin, INPUT);
   pinMode(pwm, OUTPUT);
   pinMode(dir, OUTPUT);
-  attachInterrupt(digitalPinToInterrupt(hallGivarePin), addRev, FALLING);
+  pinMode(INPUT, hallGivarePin);
+  Serial.begin(9600);
+  attachInterrupt(digitalPinToInterrupt(hallGivarePin), HtoL, FALLING);
+}
+
+ICACHE_RAM_ATTR void HtoL() {
+  rev++;
+  //Serial.println(rev);
 }
 
 void onConnectionEstablished()
 {
   client.subscribe("linus.kasper@abbindustrigymnasium.se/logger", [] (const String &payload)
   {
-    velocity = payload.toInt();
+    //enginePower = payload.toInt();
   });
 }
 
-ICACHE_RAM_ATTR void addRev(){
-  if (countRotation){
-    rev++;
-  }
+float dTime(){
+  currentMillis = millis();
+  diffMillis = currentMillis - startMillis;
+  startMillis = currentMillis;
+  return diffMillis;
 }
 
-int millisPerRotation(){
-  countRotation = true;
-  int startMillis = millis();
-  while (true){
-    if (rev > 127){ //127 pulser är ett varv
-      countRotation = false;
-      rev = 0;
-      int currentMillis = millis();
-      int diffMillis = currentMillis - startMillis;
-      Serial.println(diffMillis);
-      return 12 / (diffMillis * 3600000);
-    }   
-  }
+float dPulse(){
+  currentPulse = rev;
+  diffPulse = currentPulse - startPulse;
+  startPulse = currentPulse;
+  return diffPulse * 1000;
+}
+
+float getVelocity(){ 
+  return ((dPulse() / 96 * 1.2) * circumference) / dTime();
 }
 
 void loop() {
   client.loop();
   digitalWrite(dir, HIGH);
-  analogWrite(pwm, velocity);
-  Serial.println("Rotation (cm/min): " + String(millisPerRotation()));
+  analogWrite(pwm, enginePower);
+  isValue = getVelocity();
+  error = shouldValue - isValue;
+  enginePower += k * error;
+  client.publish("linus.kasper@abbindustrigymnasium.se/logger", "ärvärde" + String(isValue) + " börvärde" + String(shouldValue));
+  //Serial.print("Ärvärde: " + String(isValue));
+  //Serial.print(" Börvärde: " + String(shouldValue));
+  //Serial.print(" Fel: " + String(error));
+  //Serial.println(" pwm: " + String(enginePower));
+  delay(1000);
 }
