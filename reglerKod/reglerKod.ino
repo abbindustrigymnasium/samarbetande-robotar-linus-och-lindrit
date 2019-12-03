@@ -67,10 +67,10 @@ void loop() {
   isValue = getVelocity();
   error = shouldValue - isValue;
   enginePower += k * error;
-  client.publish("linus.kasper@abbindustrigymnasium.se/logger", "isValue" + String(isValue) + " wantValue" + String(shouldValue));
+  client.publish("linus.kasper@abbindustrigymnasium.se/logger", "linus isValue " + String(isValue));
   //Serial.print("Ärvärde: " + String(isValue));
   //Serial.print(" Börvärde: " + String(shouldValue));
   //Serial.print(" Fel: " + String(error));
   //Serial.println(" pwm: " + String(enginePower));
-  delay(1000);
+  delay(100);
 }
