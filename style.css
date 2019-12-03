@@ -1,0 +1,125 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    text-align: center; 
+    background-image: linear-gradient(white, rgb(148, 192, 207));
+    height: 95.7vh;
+}
+
+.wrapper {
+    display: inline-block;  
+    width: 70%;
+    padding: 200px;
+    margin-top:-10%;
+}   
+
+.header {
+    font-family: "Open Sans", sans-serif;
+    text-align: center; 
+    color: lightskyblue;
+    font: menu;
+    font-size:50px;
+} 
+
+input {
+    width : 300px;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input[type=button] {
+    background-color: rgb(78, 134, 153);
+    border-radius:25px;
+    border:0.5vh inset  lightblue;
+    color: white;
+    padding: 20px 32px;
+    text-decoration: none;
+    font: menu;
+    font-weight: bold;
+    margin: 10px 20px;
+    cursor: pointer;
+}   
+
+.textbox {
+    display: grid;
+    display: inline-block;
+    height:67vh;
+    overflow:auto;
+    margin-top:-10%;
+    margin-bottom:-10%;
+    background-color: white;
+    border:0.5vh inset  red;
+}   
+
+.slidecontainer {
+  width: 100%;
+  color:black;
+  font-size:20px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 75%;
+  height: 20px;
+  border-radius: 5px;
+  border:0.5vh inset lightskyblue;
+  background: grey;
+  opacity: 0.6;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+input[type=button]:hover {
+  background-color: white;
+  color: black;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 25%;
+  background: white;
+  cursor: pointer;
+  
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}  
+
+.inside {
+  float: left;
+  width: 18%;
+  margin-right: 2%;
+}
+
+.inside2 {
+  margin-top:-10%;
+  float: left;
+  width: 38.74%;
+  height: 68vh;
+  margin-right: 1%;
+  
+}
+
+.container {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+canvas {
+  margin-top: 15% !important;
+  height: 65% !important;
+}
