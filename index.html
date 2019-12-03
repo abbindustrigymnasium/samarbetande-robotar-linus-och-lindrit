@@ -50,46 +50,75 @@
         }
 
         function updateGraphs(){
-            new Chart(document.getElementById("linusData"), {
-                type: 'bar',
-                data: {
-                labels: ["Börvärde", "Ärvärde", "Reglerfel", "PWM värde"],
-                datasets: [
-                    {
-                    label: "Value",
-                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-                    data: [value_linus.wantValue, value_linus.isValue, value_linus.error, value_linus.pwm]
-                    }
-                ]
-                },
-                options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: 'Linus data',
-                }
-                }
-            });
+            new Chart(document.getElementById("linusData"),  {
+                type: 'line',
+  data: {
+    labels: ["5", "10", "15","20", "25", "30","35", "40", "45","50", "55", "60"],
+    datasets: [{ 
+        data: [value_linus.wantValue],
+        label: "Linus Börvärde",
+        borderColor: "#3e95cd",
+        fill: false
+      }, { 
+        data: [value_lindrit.wantValue],
+        label: "Lindrit Börvärde",
+        borderColor: "#8e5ea2",
+        fill: false
+      }, { 
+        data: [value_linus.isValue],
+        label: "Linus Ärvärde",
+        borderColor: "#3cba9f",
+        fill: false
+      }, { 
+        data: [value_lindrit.isValue],
+        label: "Lindrits Ärvärde",
+        borderColor: "#e8c3b9",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Bilarnas bör- och ärvärden'
+    }
+  }
+});
+
             new Chart(document.getElementById("lindritsData"), {
-                type: 'bar',
-                data: {
-                labels: ["Börvärde", "Ärvärde", "Reglerfel", "PWM värde"],
-                datasets: [
-                    {
-                    label: "Value",
-                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-                    data: [value_lindrit.wantValue, value_lindrit.isValue, value_lindrit.error, value_lindrit.pwm]
-                    }
-                ]
-                },
-                options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: 'Lindrits data'
-                }
-                }
-            });
+                type: 'line',
+  data: {
+    labels: ["5", "10", "15","20", "25", "30","35", "40", "45","50", "55", "60"],
+    datasets: [{ 
+        data: [value_linus.pwm],
+        label: "Linus PWM",
+        borderColor: "#3e95cd",
+        fill: false
+      }, { 
+        data: [value_lindrit.pwm],
+        label: "Lindrit PWM",
+        borderColor: "#8e5ea2",
+        fill: false
+      }, { 
+        data: [value_linus.error],
+        label: "Linus Reglerfel",
+        borderColor: "#3cba9f",
+        fill: false
+      }, { 
+        data: [value_lindrit.error],
+        label: "Lindrits Reglerfel",
+        borderColor: "#e8c3b9",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Bilarnas PWM och reglerfel'
+    }
+  }
+});
         }
 
         function onFail() {
