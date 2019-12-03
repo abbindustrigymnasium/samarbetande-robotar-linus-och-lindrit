@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Linus Kasper</title>
+      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+      <script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" type="text/javascript"></script>
+    </head>
+   <body>  
+       <h1 class = "header">Logger</h1>
+       <div>
+            <div class="wrapper">
+                <input type="button" onclick="startConnect()" value="Connect">
+                <input type="button" onclick="onSend()" value="Send">
+                <input type="button" onclick="startDisconnect()" value="Disconnect">
+            <div class="slidecontainer">
+                <input type="range" min="0" max="1023" value="center" class="slider" id="myRange" oninput="updateValue()">
+                <p>Engine Power: <span id="demo"></span></p>
+              </div>
+        </div>
+        <div class = "container">
+            <div class = "textbox inside" id = "messages"></div>
+                <div class="inside2"><canvas id="lindritsData" ></canvas></div>  
+                <div class="inside2"><canvas id="linusData" ></canvas></div> 
+            </div>
+        </div>
+    <script>    
+        window.onload = () => {
+            document.getElementById("demo").innerHTML = "512";
+        }
+
+        let topic ="linus.kasper@abbindustrigymnasium.se/logger";
+        var value_linus = {"isValue": 0, "wantValue": 0, "error": 0, "pwm": 0}
+        var value_lindrit = {"isValue": 0, "wantValue": 0, "error": 0, "pwm": 0}
+
+        
+        function startConnect() {
+            clientID = "clientID_" + parseInt(Math.random() * 100);
+            host = "maqiatto.com";
+            port = "8883";
+            client = new Paho.MQTT.Client(host, Number(port), clientID);
+            client.onConnectionLost = onConnectionLost;
+            client.onMessageArrived = onMessageArrived;
+            client.connect({userName : "linus.kasper@abbindustrigymnasium.se", password : "1234",
+                onSuccess: onConnect,
+                onFailure: onFail,
+                           });
+        }
+
+        function updateGraphs(){
+            new Chart(document.getElementById("linusData"), {
+                type: 'bar',
+                data: {
+                labels: ["Börvärde", "Ärvärde", "Reglerfel", "PWM värde"],
+                datasets: [
+                    {
+                    label: "Value",
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+                    data: [value_linus.wantValue, value_linus.isValue, value_linus.error, value_linus.pwm]
+                    }
+                ]
+                },
+                options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Linus data',
+                }
+                }
+            });
+            new Chart(document.getElementById("lindritsData"), {
+                type: 'bar',
+                data: {
+                labels: ["Börvärde", "Ärvärde", "Reglerfel", "PWM värde"],
+                datasets: [
+                    {
+                    label: "Value",
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+                    data: [value_lindrit.wantValue, value_lindrit.isValue, value_lindrit.error, value_lindrit.pwm]
+                    }
+                ]
+                },
+                options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Lindrits data'
+                }
+                }
+            });
+        }
+
+        function onFail() {
+            document.getElementById("messages").style.borderColor = "yellow";
+
+        }  
+
+        function onConnect() {
+            console.log(topic);
+            client.subscribe(topic);
+            document.getElementById("messages").style.borderColor = "green";
+        }
+
+        function onSend() {
+            let message = document.getElementById("myRange").value;
+            console.log(message);
+            message= new Paho.MQTT.Message(message);
+            message.destinationName=topic;
+            client.send(message);
+        }
+
+        function updateValue(){
+            let message = document.getElementById("myRange").value;
+            document.getElementById("demo").innerHTML = message;
+        }
+
+        function onConnectionLost(responseObject) {
+            document.getElementById("messages").style.borderColor = "yellow";
+        }
+        
+        function onMessageArrived(message) {
+            console.log("onMessageArrived: " + message.payloadString);
+            var d = new Date();
+            var hours = d.getHours();
+            var minutes = d.getMinutes();
+            if (minutes < 10){
+                var time = hours + ":" + "0" + minutes;
+            } else {
+                var time = hours + ":" + minutes;
+            }
+            var mes = message.payloadString;
+            var values = mes.split(" ");
+            console.log(values)
+            if (values[0] == "linus"){
+                value_linus[values[1]] = parseInt(values[2]);
+                console.log("Succeed") 
+            } else if (values[0] == "lindrit"){
+                value_lindrit[values[1]] = parseInt(values[2]); 
+            }
+            document.getElementById("messages").innerHTML += '<span style="float:left;">' + time + " | " + message.payloadString + '</span><br/>';
+            updateGraphs();
+        }
+
+        function startDisconnect() {
+            client.disconnect();
+            document.getElementById("messages").style.borderColor = "red";
+            document.getElementById('messages').innerHTML = '';
+        }
+        </script>
+</html>
