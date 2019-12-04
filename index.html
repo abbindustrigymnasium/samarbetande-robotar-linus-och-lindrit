@@ -52,93 +52,93 @@
         function updateGraphs(){
             new Chart(document.getElementById("linusData"),  {
                 type: 'line',
-  data: {
-    labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],
-    datasets: [{ 
-        data: [value_lindrit.wantValue],
-        label: "Börvärde",
-        borderColor: "blue",
-        fill: false
-      }, { 
-        data: [value_lindrit.isValue],
-        label: "Lindrits Ärvärde",
-        borderColor: "yellow",
-        fill: false
-      },{ 
-        data: [value_linus.isValue],
-        label: "Linus Ärvärde",
-        borderColor: "red",
-        fill: false
-      },
-    ]
-  },
-  options: {
-      scales: {
-                    xAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Time(S)'
-                            }
-                        }],
-                    yAxes: [{
-                            display: true,
-                            ticks: {
-                                beginAtZero: true,
-                                steps: 1,
-                                stepValue: 5,
-                                max: 80
-                            }
-                        }]
+                data: {
+                    labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],
+                    datasets: [{ 
+                        data: [value_lindrit.wantValue],
+                        label: "Börvärde",
+                        borderColor: "blue",
+                        fill: false
+                    }, { 
+                        data: [value_lindrit.isValue],
+                        label: "Lindrits Ärvärde",
+                        borderColor: "yellow",
+                        fill: false
+                    },{ 
+                        data: [value_linus.isValue],
+                        label: "Linus Ärvärde",
+                        borderColor: "red",
+                        fill: false
+                    },
+                    ]
                 },
-    title: {
-      display: true,
-      text: 'Bilarnas är- och börvärden'
-    }
-  }
-});
+                options: {
+                    scales: {
+                            xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Time(S)'
+                                    }
+                                }],
+                            yAxes: [{
+                                    display: true,
+                                    ticks: {
+                                        beginAtZero: true,
+                                        steps: 1,
+                                        stepValue: 5,
+                                        max: 80
+                                    }
+                                }]
+                            },
+                title: {
+                display: true,
+                text: 'Bilarnas är- och börvärden'
+                }
+                }
+                });
 
-            new Chart(document.getElementById("lindritsData"), {
-                type: 'line',
-  data: {
-    labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],
-    datasets: [{ 
-        data: [value_linus.pwm],
-        label: "Linus PWM",
-        borderColor: "green",
-        fill: false
-      },{ 
-        data: [value_lindrit.pwm],
-        label: "Lindrit PWM",
-        borderColor: "red",
-        fill: false
-      }
-    ]
-  },
-  options: {scales: {
-                    xAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Time(S)'
-                            }
-                        }],
-                    yAxes: [{
-                            display: true,
-                            ticks: {
-                                beginAtZero: true,
-                                steps: 1,
-                                stepValue: 5,
-                                max: 1200
-                            }
-                        }]
-                },
-    title: {
-      display: true,
-      text: 'Bilarnas PWM'
-    }
-  }
-});
+                new Chart(document.getElementById("lindritsData"), {
+                    type: 'line',
+                    data: {
+                        labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],
+                        datasets: [{ 
+                            data: [value_linus.pwm],
+                            label: "Linus PWM",
+                            borderColor: "green",
+                            fill: false
+                        },{ 
+                            data: [value_lindrit.pwm],
+                            label: "Lindrit PWM",
+                            borderColor: "red",
+                            fill: false
+                        }
+                        ]
+                    },
+                    options: {scales: {
+                                        xAxes: [{
+                                                display: true,
+                                                scaleLabel: {
+                                                    display: true,
+                                                    labelString: 'Time(S)'
+                                                }
+                                            }],
+                                        yAxes: [{
+                                                display: true,
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                    steps: 1,
+                                                    stepValue: 5,
+                                                    max: 1200
+                                                }
+                                            }]
+                                    },
+                        title: {
+                        display: true,
+                        text: 'Bilarnas PWM'
+                        }
+                    }
+                    });
         }
 
         function onFail() {
