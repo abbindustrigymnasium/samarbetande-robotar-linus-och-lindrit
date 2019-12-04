@@ -115,28 +115,29 @@
                         }
                         ]
                     },
-                    options: {scales: {
-                                        xAxes: [{
+                    options: {
+                        scales: {
+                                    xAxes: [{
+                                            display: true,
+                                            scaleLabel: {
                                                 display: true,
-                                                scaleLabel: {
-                                                    display: true,
-                                                    labelString: 'Time(S)'
-                                                }
-                                            }],
-                                        yAxes: [{
-                                                display: true,
-                                                ticks: {
-                                                    beginAtZero: true,
-                                                    steps: 1,
-                                                    stepValue: 5,
-                                                    max: 1200
-                                                }
-                                            }]
+                                                labelString: 'Time(S)'
+                                            }
+                                        }],
+                                    yAxes: [{
+                                            display: true,
+                                            ticks: {
+                                                beginAtZero: true,
+                                                steps: 1,
+                                                stepValue: 5,
+                                                max: 1200
+                                            }
+                                        }]
                                     },
                         title: {
                         display: true,
                         text: 'Bilarnas PWM'
-                        }
+                    }
                     }
                     });
         }
