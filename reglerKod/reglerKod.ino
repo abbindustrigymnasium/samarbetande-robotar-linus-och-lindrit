@@ -3,8 +3,8 @@
 #define dir 0
 #define hallGivarePin 13
 
-float rev = 0, currentMillis = 0, startMillis = 0, diffMillis = 0, currentPulse = 0, startPulse = 0, diffPulse = 0, circumference = 11.6;
-float error = 0, timeError = 0, kP = 5,kI = 0.05, isValue = 0, setValue = 50, enginePower = 600;
+float rev, currentMillis, startMillis, diffMillis, currentPulse, startPulse, diffPulse, error, timeError, isValue, enginePower;
+float kP = 0.5, kI = 7500, setValue = 30, circumference = 3.7 * PI;
 
 void onConnectionEstablished();
 
@@ -16,7 +16,7 @@ EspMQTTClient client(
  "linus.kasper@abbindustrigymnasium.se",
  "1234",
  "logger",
- onConnectionEstablished, // Connection established callback
+ onConnectionEstablished,
  true,
  true    
 );
@@ -26,11 +26,7 @@ void setup() {
   pinMode(dir, OUTPUT);
   pinMode(INPUT, hallGivarePin);
   Serial.begin(9600);
-  attachInterrupt(digitalPinToInterrupt(hallGivarePin), HtoL, FALLING);
-}
-
-ICACHE_RAM_ATTR void HtoL() {
-  rev++;
+  attachInterrupt(digitalPinToInterrupt(hallGivarePin), addRev, FALLING);
 }
 
 void onConnectionEstablished()
@@ -39,6 +35,10 @@ void onConnectionEstablished()
   {
     //enginePower = payload.toInt();
   });
+}
+
+ICACHE_RAM_ATTR void addRev() {
+  rev++;
 }
 
 float dTime(){
@@ -56,20 +56,16 @@ float dPulse(){
 }
 
 float getVelocity(){ 
-  return ((dPulse() / 96 * 1.2) * circumference) / dTime();
+  return ((dPulse() / 115.2) * circumference) / dTime();
 }
 
 void loop() {
-  //client.loop();
+  client.loop();
   digitalWrite(dir, HIGH);
   analogWrite(pwm, enginePower);
   isValue = getVelocity();
   error = setValue - isValue;
   timeError += error * dTime();
-  enginePower = kP * error + kI * timeError;
-  client.publish("linus.kasper@abbindustrigymnasium.se/logger", "linus isValue " + String(isValue));
-  /*Serial.print("Ärvärde: " + String(isValue));
-  Serial.print(" Börvärde: " + String(setValue));
-  Serial.print(" Fel: " + String(error));
-  Serial.println(" pwm: " + String(enginePower));*/
+  enginePower = (kP * error) + (kI * timeError);
+  client.publish("linus.kasper@abbindustrigymnasium.se/logger","linus isValue " + String(isValue));
 }
