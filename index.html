@@ -16,7 +16,7 @@
                 <input type="button" onclick="onSend()" value="Send">
                 <input type="button" onclick="startDisconnect()" value="Disconnect">
             <div class="slidecontainer">
-                <input type="range" min="0" max="80" value="center" class="slider" id="myRange" oninput="updateValue()">
+                <input type="range" min="0" max="100" value="center" class="slider" id="myRange" oninput="updateValue()">
                 <p>Börvärdet: <span id="demo"></span></p>
               </div>
         </div>
@@ -27,14 +27,17 @@
             </div>
         </div>
     <script>    
+    
         window.onload = () => {
-            document.getElementById("demo").innerHTML = "40";
+            document.getElementById("demo").innerHTML = "50";
         }
 
         let topic ="linus.kasper@abbindustrigymnasium.se/logger";
-        var value_linus = {"isValue": 0, "wantValue": 0, "error": 0, "pwm": 0, "time":0}
-        var value_lindrit = {"isValue": 0, "wantValue": 0, "error": 0, "pwm": 0, "time":0}
-
+        var linus_isValue = []
+        var lindrit_isValue = []
+        var linus_PWM = []
+        var lindrit_PWM = []
+        
         
         function startConnect() {
             clientID = "clientID_" + parseInt(Math.random() * 100);
@@ -48,31 +51,34 @@
                 onFailure: onFail,
                            });
         }
+        
 
         function updateGraphs(){
+            let x = document.getElementById("myRange").value;
             new Chart(document.getElementById("linusData"),  {
                 type: 'line',
                 data: {
                     labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],
                     datasets: [{ 
-                        data: [value_lindrit.wantValue],
+                        data: [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x],
+                        pointRadius: 0,  
                         label: "Börvärde",
                         borderColor: "blue",
                         fill: false
                     }, { 
-                        data: [value_lindrit.isValue],
+                        data: lindrit_isValue,
                         label: "Lindrits Ärvärde",
                         borderColor: "yellow",
                         fill: false
                     },{ 
-                        data: [value_linus.isValue],
+                        data: linus_isValue,
                         label: "Linus Ärvärde",
                         borderColor: "red",
                         fill: false
                     },
                     ]
                 },
-                options: {
+                    options: {
                     scales: {
                             xAxes: [{
                                     display: true,
@@ -87,7 +93,7 @@
                                         beginAtZero: true,
                                         steps: 1,
                                         stepValue: 5,
-                                        max: 80
+                                        max: 100
                                     }
                                 }]
                             },
@@ -103,12 +109,12 @@
                     data: {
                         labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],
                         datasets: [{ 
-                            data: [value_linus.pwm],
+                            data: linus_PWM,
                             label: "Linus PWM",
                             borderColor: "green",
                             fill: false
                         },{ 
-                            data: [value_lindrit.pwm],
+                            data: lindrit_PWM,
                             label: "Lindrit PWM",
                             borderColor: "red",
                             fill: false
@@ -140,6 +146,7 @@
                     }
                     }
                     });
+                    
         }
 
         function onFail() {
@@ -184,10 +191,11 @@
             var values = mes.split(" ");
             console.log(values)
             if (values[0] == "linus"){
-                value_linus[values[1]] = parseInt(values[2]);
-                console.log("Succeed") 
+                linus_isValue.push(parseInt(values[1]));
+                linus_PWM.push(parseInt(values[2]));
             } else if (values[0] == "lindrit"){
-                value_lindrit[values[1]] = parseInt(values[2]); 
+                lindrit_isValue.push(parseInt(values[1]));
+                lindrit_PWM.push(parseInt(values[2]));
             }
             document.getElementById("messages").innerHTML += '<span style="float:left;">' + time + " | " + message.payloadString + '</span><br/>';
             updateGraphs();
