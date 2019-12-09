@@ -37,8 +37,10 @@
         var lindrit_isValue = [];
         var linus_PWM = [];
         var lindrit_PWM = [];
+        var linus_error = [];
+        var lindrit_error = [];
         var times = [0];
-        var shouldValue = [];
+        var y = [];
         var number = 0;
         
         function startConnect() {
@@ -63,12 +65,12 @@
                     labels: times,
                         datasets: [ { 
                         data: lindrit_isValue,
-                        pointRadius: 2, 
+                        pointRadius: 0, 
                         label: "Lindrits Ärvärde",
                         borderColor: "red",
                         fill: false
                     },{ 
-                        data: shouldValue,
+                        data: y,
                         pointRadius: 0,  
                         label: "Börvärde",
                         borderColor: "blue",
@@ -109,12 +111,12 @@
                         labels: times,
                             datasets: [{ 
                         data: linus_isValue,
-                        pointRadius: 2, 
+                        pointRadius: 0, 
                         label: "Linus Ärvärde",
                         borderColor: "green",
                         fill: false
                     },{ 
-                        data: shouldValue,
+                        data: y,
                         pointRadius: 0,  
                         label: "Börvärde",
                         borderColor: "blue",
@@ -138,7 +140,7 @@
                                                 beginAtZero: true,
                                                 steps: 1,
                                                 stepValue: 5,
-                                                max: 1200
+                                                max: 100
                                             }
                                         }]
                                     },
