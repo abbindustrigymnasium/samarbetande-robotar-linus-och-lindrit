@@ -37,7 +37,9 @@ void onConnectionEstablished()
       
     }else{
       setValue = payload.toInt();
-      drive = true;
+      if (setValue > 0){
+        drive = true;
+      }
     }
   });
 }
