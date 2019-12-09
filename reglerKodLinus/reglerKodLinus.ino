@@ -1,4 +1,4 @@
-#include "EspMQTTClient.h"
+  #include "EspMQTTClient.h"
 #define pwm 5
 #define dir 0
 #define hallGivarePin 13
@@ -39,7 +39,7 @@ void onConnectionEstablished()
       setValue = payload.toInt();
       if (setValue > 0){
         drive = true;
-        enginePower = 300;
+        enginePower = 400;
       }
     }
   });
