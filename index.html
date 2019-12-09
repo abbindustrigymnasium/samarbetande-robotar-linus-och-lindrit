@@ -37,10 +37,8 @@
         var lindrit_isValue = [];
         var linus_PWM = [];
         var lindrit_PWM = [];
-        var linus_error = [];
-        var lindrit_error = [];
         var times = [0];
-        var y = [];
+        var shouldValue = [];
         var number = 0;
         
         function startConnect() {
@@ -63,37 +61,17 @@
                 type: 'line',
                 data: {
                     labels: times,
-                        datasets: [{ 
-                        data: y,
-                        pointRadius: 0,  
-                        label: "Börvärde",
-                        borderColor: "blue",
-                        fill: false
-                    }, { 
+                        datasets: [ { 
                         data: lindrit_isValue,
                         pointRadius: 2, 
                         label: "Lindrits Ärvärde",
                         borderColor: "red",
                         fill: false
                     },{ 
-                        data: linus_isValue,
-                        pointRadius: 2, 
-                        label: "Linus Ärvärde",
-                        borderColor: "green",
-                        fill: false
-                    },
-                    {
-                        data: lindrit_error,
-                        pointRadius: 2, 
-                        label: "Lindrits Error",
-                        borderColor: "yellow",
-                        fill: false
-                    },
-                    {
-                        data: linus_error,
-                        pointRadius: 2, 
-                        label: "Linus Error",
-                        borderColor: "orange",
+                        data: shouldValue,
+                        pointRadius: 0,  
+                        label: "Börvärde",
+                        borderColor: "blue",
                         fill: false
                     }
                     ]
@@ -120,7 +98,7 @@
                             },
                 title: {
                 display: true,
-                text: 'Bilarnas är- och börvärden'
+                text: 'Lindrits Bil'
                 }
                 }
                 });
@@ -130,18 +108,18 @@
                     data: {
                         labels: times,
                             datasets: [{ 
-                            data: linus_PWM,
-                            pointRadius: 2, 
-                            label: "Linus PWM",
-                            borderColor: "green",
-                            fill: false
-                        },{ 
-                            data: lindrit_PWM,
-                            pointRadius: 2, 
-                            label: "Lindrit PWM",
-                            borderColor: "red",
-                            fill: false
-                        }
+                        data: linus_isValue,
+                        pointRadius: 2, 
+                        label: "Linus Ärvärde",
+                        borderColor: "green",
+                        fill: false
+                    },{ 
+                        data: shouldValue,
+                        pointRadius: 0,  
+                        label: "Börvärde",
+                        borderColor: "blue",
+                        fill: false
+                    }
                         ]
                     },
                     options: {
@@ -166,7 +144,7 @@
                                     },
                         title: {
                         display: true,
-                        text: 'Bilarnas PWM'
+                        text: 'Linus Bil'
                     }
                     }
                     });
