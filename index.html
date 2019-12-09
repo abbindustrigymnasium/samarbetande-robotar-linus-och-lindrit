@@ -37,10 +37,8 @@
         var lindrit_isValue = [];
         var linus_PWM = [];
         var lindrit_PWM = [];
-        var linus_error = [];
-        var lindrit_error = [];
         var times = [0];
-        var y = [];
+        var shouldValue = [];
         var number = 0;
         
         function startConnect() {
@@ -70,7 +68,7 @@
                         borderColor: "red",
                         fill: false
                     },{ 
-                        data: y,
+                        data: shouldValue,
                         pointRadius: 0,  
                         label: "Börvärde",
                         borderColor: "blue",
@@ -116,7 +114,7 @@
                         borderColor: "green",
                         fill: false
                     },{ 
-                        data: y,
+                        data: shouldValue,
                         pointRadius: 0,  
                         label: "Börvärde",
                         borderColor: "blue",
