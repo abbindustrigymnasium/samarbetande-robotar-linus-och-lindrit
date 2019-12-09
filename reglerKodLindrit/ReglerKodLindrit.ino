@@ -39,6 +39,7 @@ void onConnectionEstablished()
       setValue = payload.toInt();
       if (setValue > 0){
         drive = true;
+        enginePower = 300;
       }
     }
   });
