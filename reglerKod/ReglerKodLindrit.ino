@@ -63,7 +63,7 @@ float dPulse(){
 }
 
 float getVelocity(){ 
-  return ((dPulse() / 115.2) * circumference) / dTime();
+  return ((dPulse() / 100) * circumference) / dTime();
 }
 
 void loop() {
@@ -75,7 +75,7 @@ void loop() {
     error = setValue - isValue;
     timeError += error * dTime();
     enginePower = (kP * error) + (kI * timeError);
-    client.publish("linus.kasper@abbindustrigymnasium.se/logger","lindrit " + String(isValue) + " " +String(enginePower) + " " + String(error) + " /");
+    client.publish("linus.kasper@abbindustrigymnasium.se/logger","lindrit " + String(isValue) + " " + String(enginePower) + " /");
     if (enginePower > 1023){
       enginePower = 1023;
     }
