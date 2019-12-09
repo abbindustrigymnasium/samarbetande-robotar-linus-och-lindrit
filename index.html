@@ -33,16 +33,15 @@
         }
 
         let topic ="linus.kasper@abbindustrigymnasium.se/logger";
-        var linus_isValue = []
-        var lindrit_isValue = []
-        var linus_PWM = []
-        var lindrit_PWM = []
-        var linus_error = []
-        var lindrit_error = []
-        var times = [0]
-        
-        var y = []
-        
+        var linus_isValue = [];
+        var lindrit_isValue = [];
+        var linus_PWM = [];
+        var lindrit_PWM = [];
+        var linus_error = [];
+        var lindrit_error = [];
+        var times = [0];
+        var y = [];
+        var number = 0;
         
         function startConnect() {
             clientID = "clientID_" + parseInt(Math.random() * 100);
@@ -201,7 +200,7 @@
         function onConnectionLost(responseObject) {
             document.getElementById("messages").style.borderColor = "yellow";
         }
-        var number = 0
+
         function onMessageArrived(message) {
             console.log("onMessageArrived: " + message.payloadString);
             var d = new Date();
@@ -230,6 +229,8 @@
             }
             document.getElementById("messages").innerHTML += '<span style="float:left;">' + time + " | " + message.payloadString + '</span><br/>';
             updateGraphs();
+            var objDiv = document.getElementById("messages");
+            objDiv.scrollTop = objDiv.scrollHeight;
         }
 
         function startDisconnect() {
