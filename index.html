@@ -16,7 +16,7 @@
                 <input type="button" onclick="onSend()" value="Send">
                 <input type="button" onclick="startDisconnect()" value="Disconnect">
             <div class="slidecontainer">
-                <input type="range" min="0" max="100" value="center" class="slider" id="myRange" oninput="updateValue()">
+                <input type="range" min="0" max="100" value="0" class="slider" id="myRange" oninput="updateValue()">
                 <p>Börvärdet: <span id="demo"></span></p>
               </div>
         </div>
@@ -29,7 +29,7 @@
     <script>    
     
         window.onload = () => {
-            document.getElementById("demo").innerHTML = "50";
+            document.getElementById("demo").innerHTML = "0";
         }
 
         let topic ="linus.kasper@abbindustrigymnasium.se/logger";
@@ -37,6 +37,11 @@
         var lindrit_isValue = []
         var linus_PWM = []
         var lindrit_PWM = []
+        var linus_error = []
+        var lindrit_error = []
+        var times = [0]
+        
+        var y = []
         
         
         function startConnect() {
@@ -54,13 +59,13 @@
         
 
         function updateGraphs(){
-            let x = document.getElementById("myRange").value;
+            
             new Chart(document.getElementById("linusData"),  {
                 type: 'line',
                 data: {
-                    labels: ["0","0.5","1","1.5","2","2,5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10","10.5","11","11.5","12","12.5","13","13.5","14","14.5","15","15.5","16","16.5","17","17.5","18","18.5","19","19.5","20","20.5","21","21.5","22","22.5","23","23.5","24","24.5","25","25.5","26","26.5","27","27.5","28","28.5","29","29.5","30"],
-                    datasets: [{ 
-                        data: [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x],
+                    labels: times,
+                        datasets: [{ 
+                        data: y,
                         pointRadius: 0,  
                         label: "Börvärde",
                         borderColor: "blue",
@@ -78,6 +83,20 @@
                         borderColor: "green",
                         fill: false
                     },
+                    {
+                        data: lindrit_error,
+                        pointRadius: 2, 
+                        label: "Lindrits Error",
+                        borderColor: "yellow",
+                        fill: false
+                    },
+                    {
+                        data: linus_error,
+                        pointRadius: 2, 
+                        label: "Linus Error",
+                        borderColor: "orange",
+                        fill: false
+                    }
                     ]
                 },
                     options: {
@@ -182,7 +201,7 @@
         function onConnectionLost(responseObject) {
             document.getElementById("messages").style.borderColor = "yellow";
         }
-        
+        var number = 0
         function onMessageArrived(message) {
             console.log("onMessageArrived: " + message.payloadString);
             var d = new Date();
@@ -196,12 +215,18 @@
             var mes = message.payloadString;
             var values = mes.split(" ");
             console.log(values)
+            number+=1
+            let x = document.getElementById("myRange").value
+            times.push(number)
+            y.push(x)
             if (values[0] == "linus"){
                 linus_isValue.push(parseInt(values[1]));
                 linus_PWM.push(parseInt(values[2]));
+                linus_error.push(parseInt(values[3]));
             } else if (values[0] == "lindrit"){
                 lindrit_isValue.push(parseInt(values[1]));
                 lindrit_PWM.push(parseInt(values[2]));
+                lindrit_error.push(parseInt(values[3]));
             }
             document.getElementById("messages").innerHTML += '<span style="float:left;">' + time + " | " + message.payloadString + '</span><br/>';
             updateGraphs();
