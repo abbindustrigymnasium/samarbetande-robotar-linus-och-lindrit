@@ -34,23 +34,19 @@
 
         let topic ="linus.kasper@abbindustrigymnasium.se/logger";
         var linus_isValue = [];
-        var lindrit_isValue = [];
-        var linus_PWM = [];
-        var lindrit_PWM = [];
-        var linus_error = [];
-        var lindrit_error = [];
+        var lindrit_isValue = [];    //vi gör listor där värden som kommer in kan läggas in i
         var times = [0];
         var y = [];
         var number = 0;
         
-        function startConnect() {
+        function startConnect() {   // funktion för att börja anslutningen
             clientID = "clientID_" + parseInt(Math.random() * 100);
             host = "maqiatto.com";
-            port = "8883";
+            port = "8883";  
             client = new Paho.MQTT.Client(host, Number(port), clientID);
             client.onConnectionLost = onConnectionLost;
             client.onMessageArrived = onMessageArrived;
-            client.connect({userName : "linus.kasper@abbindustrigymnasium.se", password : "1234",
+            client.connect({userName : "linus.kasper@abbindustrigymnasium.se", password : "1234", //bestämmer användarnamn och lösenord så att den kan logga in på maqiatto
                 onSuccess: onConnect,
                 onFailure: onFail,
                            });
@@ -59,15 +55,15 @@
 
         function updateGraphs(){
             
-            new Chart(document.getElementById("linusData"),  {
+            new Chart(document.getElementById("lindritsData"),  { //första grafen som visar lindrits data
                 type: 'line',
                 data: {
                     labels: times,
                         datasets: [ { 
-                        data: lindrit_isValue,
+                        data: lindrit_isValue,   //datat är den lista som vi definerade sen tidigare
                         pointRadius: 0, 
                         label: "Lindrits Ärvärde",
-                        borderColor: "red",
+                        borderColor: "red",   //bestämmer färg på linjerna samt labels
                         fill: false
                     },{ 
                         data: y,
@@ -78,8 +74,8 @@
                     }
                     ]
                 },
-                    options: {
-                        animation:{duration: 0},
+                    options: { //options för graafen där vi anpassar den för våra behov
+                        animation:{duration: 0},  //tar bort animationerna på grafen
                     scales: {
                             xAxes: [{
                                     display: true,
@@ -105,7 +101,7 @@
                 }
                 });
 
-                new Chart(document.getElementById("lindritsData"), {
+                new Chart(document.getElementById("linusData"), { // den andra grafen för linus data
                     type: 'line',
                     data: {
                         labels: times,
@@ -156,15 +152,15 @@
         function onFail() {
             document.getElementById("messages").style.borderColor = "yellow";
 
-        }  
+        }  // om den misslyckas med anslutningen blir kanterna på den vita rutan gula
 
-        function onConnect() {
+        function onConnect() { // funktion för att ansluta till mqtt
             console.log(topic);
             client.subscribe(topic);
             document.getElementById("messages").style.borderColor = "green";
-        }
+        } // om anslutningen lyckas blir kanterna gröna
 
-        function onSend() {
+        function onSend() { // funktion för att skicka värden till maqiatto från hemsidan när vi klickar send
             let message = document.getElementById("myRange").value;
             console.log(message);
             message= new Paho.MQTT.Message(message);
@@ -172,16 +168,16 @@
             client.send(message);
         }
 
-        function updateValue(){
+        function updateValue(){ // funktion för när vi uppdaterar meddelandet när slidern justeras
             let message = document.getElementById("myRange").value;
             document.getElementById("demo").innerHTML = message;
         }
 
-        function onConnectionLost(responseObject) {
+        function onConnectionLost(responseObject) { // om anslutningen förloras gör vi kanterna på rutan gula
             document.getElementById("messages").style.borderColor = "yellow";
         }
 
-        function onMessageArrived(message) {
+        function onMessageArrived(message) { // funktion som sorterar värderna när vi får in ett meddelande
             console.log("onMessageArrived: " + message.payloadString);
             var d = new Date();
             var hours = d.getHours();
@@ -192,30 +188,26 @@
                 var time = hours + ":" + minutes;
             }
             var mes = message.payloadString;
-            var values = mes.split(" ");
+            var values = mes.split(" ");  // vi splittar meddelandet och får en array med värdena som kommit in
             console.log(values)
             number+=1
             let x = document.getElementById("myRange").value
             times.push(number)
             y.push(x)
-            if (values[0] == "linus"){
-                linus_isValue.push(parseInt(values[1]));
-                linus_PWM.push(parseInt(values[2]));
-                linus_error.push(parseInt(values[3]));
-            } else if (values[0] == "lindrit"){
+            if (values[0] == "linus"){ // om det första elementet i listan är linus lägger den in värdena i linus dataset
+                linus_isValue.push(parseInt(values[1])); 
+            } else if (values[0] == "lindrit"){ // den gör samma sak om första elementet är lindrit
                 lindrit_isValue.push(parseInt(values[1]));
-                lindrit_PWM.push(parseInt(values[2]));
-                lindrit_error.push(parseInt(values[3]));
             }
-            document.getElementById("messages").innerHTML += '<span style="float:left;">' + time + " | " + message.payloadString + '</span><br/>';
+            document.getElementById("messages").innerHTML += '<span style="float:left;">' + time + " | " + message.payloadString + '</span><br/>'; //skriver ut meddelandet i loggern
             updateGraphs();
             var objDiv = document.getElementById("messages");
             objDiv.scrollTop = objDiv.scrollHeight;
         }
 
-        function startDisconnect() {
+        function startDisconnect() { //funktion för att koppla bort från mqtt
             client.disconnect();
-            document.getElementById("messages").style.borderColor = "red";
+            document.getElementById("messages").style.borderColor = "red"; //den vita rutan får då röda kanter
             document.getElementById('messages').innerHTML = '';
         }
         </script>
