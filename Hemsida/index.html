@@ -222,7 +222,7 @@
                 lindrit_isValue.push(parseInt(values[1]));
             }
             //Skriver ut meddelandet i loggern
-            document.getElementById("messages").innerHTML += '<span style="float:left;">' + time + " | " + message.payloadString + '</span><br/>'; 
+            document.getElementById("messages").innerHTML += '<span style="float:left;">' + time + " | " + message.payloadString + '</span><br/>';
             updateGraphs();
             var objDiv = document.getElementById("messages");
             objDiv.scrollTop = objDiv.scrollHeight;
