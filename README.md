@@ -4,6 +4,7 @@ I det här projektet har jag Linus Kasper och Lindrit Koxha försökt att få tv
 
 ## Bilder på [hemsidan](http://robotbilsida.s3-website-us-east-1.amazonaws.com)
 ![test](https://github.com/abbindustrigymnasium/samarbetande-robotar-linus-och-lindrit/blob/master/Dokumentation/1.png)
+![test](https://github.com/abbindustrigymnasium/samarbetande-robotar-linus-och-lindrit/blob/master/Dokumentation/2.png)
 *
 *
 
