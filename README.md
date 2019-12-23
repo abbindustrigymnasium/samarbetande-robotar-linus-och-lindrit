@@ -14,7 +14,7 @@ I det här projektet har Linus Kasper och Lindrit Koxha försökt att få två r
     * linusRobot3.jpg - Linus robot från sidan
 
 ## Dokumentation 
-* Dokumentation.docx - dokumentationen för robotarna
+* Dokumentation.pdf - dokumentationen för robotarna
 
 ## [Hemsida](http://robotbilsida.s3-website-us-east-1.amazonaws.com)
 * Bilder på hemsidan
