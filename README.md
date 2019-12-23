@@ -1,6 +1,6 @@
 # Samarbetande robotar Linus Kasper och Lindrit Koxha
 
-I det här projektet har jag Linus Kasper och Lindrit Koxha försökt att få två robotar att åka med samma hastighet. För att lösa den uppgiften så använde vi oss av ett reglersystem. Programmvaran är skriven i språket **C++** och **Java Script**. Där vi har har ett skript till reglerloopen och ett till hemsidan där vi viusaliserar hastigheterna i realtid. För att skicka data i realtid använde vi oss av **MQTT** där vi hostade en **broker** på **maqiatto.com**.
+I det här projektet har Linus Kasper och Lindrit Koxha försökt att få två robotar att åka med samma hastighet. För att lösa den uppgiften så använde vi oss av ett reglersystem. Programmvaran är skriven i språket **C++** och **Java Script**. Där vi har har ett skript till reglerloopen och ett till hemsidan där vi viusaliserar hastigheterna i realtid. För att skicka data i realtid använde vi oss av **MQTT** där vi hostade en **broker** på **maqiatto.com**.
 
 ## Bilder på robotarna
 * Lindrits Robot
