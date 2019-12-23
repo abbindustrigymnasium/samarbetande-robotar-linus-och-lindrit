@@ -32,7 +32,7 @@ void setup() {
   pinMode(pwm, OUTPUT);
   pinMode(dir, OUTPUT);
   pinMode(INPUT, hallGivarePin);
-
+ 
   //Defining serial tranfer
   Serial.begin(9600);
 

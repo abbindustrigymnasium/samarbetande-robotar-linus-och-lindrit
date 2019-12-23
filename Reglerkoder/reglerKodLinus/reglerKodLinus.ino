@@ -31,7 +31,7 @@ void setup() {
   //Defining inputs and outputs
   pinMode(pwm, OUTPUT);
   pinMode(dir, OUTPUT);
-  pinMode(INPUT, hallGivarePin);
+  pinMode(INPUT, hallGivarePin); 
 
   //Defining serial tranfer
   Serial.begin(9600);
