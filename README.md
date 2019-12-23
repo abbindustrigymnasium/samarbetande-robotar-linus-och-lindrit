@@ -2,12 +2,6 @@
 
 I det här projektet har jag Linus Kasper och Lindrit Koxha försökt att få två robotar att åka med samma hastighet. För att lösa den uppgiften så använde vi oss av ett reglersystem. Programmvaran är skriven i språket **C++** och **Java Script**. Där vi har har ett skript till reglerloopen och ett till hemsidan där vi viusaliserar hastigheterna i realtid. För att skicka data i realtid använde vi oss av **MQTT** där vi hostade en **broker** på **maqiatto.com**.
 
-## Bilder på [hemsidan](http://robotbilsida.s3-website-us-east-1.amazonaws.com)
-![test](https://github.com/abbindustrigymnasium/samarbetande-robotar-linus-och-lindrit/blob/master/Hemsida/Bilder/2.png)
-![test](https://github.com/abbindustrigymnasium/samarbetande-robotar-linus-och-lindrit/blob/master/Hemsida/Bilder/3.png)
-![test](https://github.com/abbindustrigymnasium/samarbetande-robotar-linus-och-lindrit/blob/master/Hemsida/Bilder/5.png)
-
-
 ## Bilder på robotarna
 * Lindrits Robot
     * lindritsRobot1.jpg - Lindrits robot framifrån
@@ -22,7 +16,14 @@ I det här projektet har jag Linus Kasper och Lindrit Koxha försökt att få tv
 ## Dokumentation 
 * Dokumentation.docx - dokumentationen för robotarna
 
-## Hemsida
+## [Hemsida](http://robotbilsida.s3-website-us-east-1.amazonaws.com)
+* Bilder på hemsidan
+    * 1.png - startsidan
+    * 2.png - när man klickar connect
+    * 3.png - när man är connectad till brokern
+    * 4.png - när man skickar ett börvärde
+    * 5.png - när bilarnas data loggas och visualiserats
+    * 6.png - när man klickar disconnect
 * index.html - hemsidan
 * style.css - stylen till hemsidan
 
